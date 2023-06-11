@@ -98,7 +98,6 @@ public class DinoCollector_ColliderControl : MonoBehaviour
             audiosource.loop = false;
 
 
-            DinoIndex = dinosourManager.DinoRandomInt();
             StartCoroutine(DinosourAlert()); //알림. 공룡이 도망가요!~
             Destroy(collision.gameObject); //해당 이펙트 제거
         }
@@ -144,7 +143,11 @@ public class DinoCollector_ColliderControl : MonoBehaviour
     //공룡이 도망가는 애니메이션 및 기능
     IEnumerator DinosourChase()
     {
-        DinoIsRoaring = true; //공룡 울음소리 활성화 (Update문 활용)
+        //랜덤으로 공룡 배치하는 함수
+        DinoIndex = dinosourManager.DinoRandomInt();
+
+        //공룡 울음소리 활성화 (Update문 활용)
+        DinoIsRoaring = true; 
 
         //공룡 클론 만들어서 배치하기
         RandomDino = Instantiate(Dinosours[DinoIndex], Dinosours[DinoIndex].transform.position, Dinosours[DinoIndex].transform.rotation);
@@ -175,7 +178,6 @@ public class DinoCollector_ColliderControl : MonoBehaviour
             RandomDino.transform.position = Vector3.MoveTowards(RandomDino.transform.position, InstaiateDinoPos[TotalIndex].transform.GetChild(0).position, 800f * Time.deltaTime);
 
             //공룡이 일정 거리 다 주행함, 한번만 실행
-            //print("완주거리: " + Vector3.Distance(RandomDino.transform.position, InstaiateDinoPos[TotalIndex].transform.GetChild(0).position));
             if (Vector3.Distance(RandomDino.transform.position, InstaiateDinoPos[TotalIndex].transform.GetChild(0).position) <= 0.05f)
             {
                 //print("완주");
@@ -308,7 +310,7 @@ public class DinoCollector_ColliderControl : MonoBehaviour
 
     bool DinoIsRoaring = false;
 
-    #region 결국 하드 코딩할 수밖에 없었다
+    #region 
     public void DinoClassification_Score(String DinoName)
     {
 
